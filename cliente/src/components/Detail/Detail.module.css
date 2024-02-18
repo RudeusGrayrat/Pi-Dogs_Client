@@ -1,0 +1,23 @@
+.detail {
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 20vh 20vmax 20vh 20vmax;
+    padding: 10px;
+    background-color: #86e1fd;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #aaa;
+}
+
+.info {
+    flex-direction: column;
+}
+
+.ima {
+    border-radius: 5px;
+    margin-top: 10px;
+    justify-content: flex-end;
+}

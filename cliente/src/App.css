@@ -2,6 +2,9 @@
   text-align: center;
 }
 
+body{
+  background-image: url("https://w7.pngwing.com/pngs/260/82/png-transparent-dog-paw-prints-seamless-background.png");
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

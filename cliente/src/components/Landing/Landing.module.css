@@ -1,0 +1,36 @@
+.landing {
+    background-image: url("https://img.freepik.com/vector-gratis/pata-diseno-logotipo-mascota-vector-negocio-tienda-animales_53876-136741.jpg?w=826&t=st=1708125051~exp=1708125651~hmac=238a3a62ab413f1ffde49913789d762379410e093cadd03a69174d0963bb7348");
+    min-height: 98vh;
+    background-size: cover;
+    background-position: center center;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.navlink {
+    text-decoration: none;
+    color: white;
+
+}
+
+.bienvenido {
+    color: white;
+    font-size: 33px;
+    position: absolute;
+    top: 47%;
+    left: 40%;
+}
+
+.pokemons:hover {
+    color: gold;
+    background-color: rgba(85, 208, 212, 0.484);
+    border-radius: 10px;
+}
+
+.nc{
+    color: black;
+    background-color: rgba(255, 255, 255, 0);
+}

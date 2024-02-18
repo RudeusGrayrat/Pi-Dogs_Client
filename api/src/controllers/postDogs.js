@@ -1,26 +1,20 @@
-const { dogs, temperaments } = require('../db');
+const { Dog, Temperaments } = require('../db');
 
 const postDogs = async (req, res) => {
     const {
+        imagen,
         name,
-        image,
-        vida,
-        ataque,
-        defensa,
-        velocidad,
-        altura,
-        peso,
-        types
+        height,
+        weight,
+        life_span,
+        temperament
     } = req.body;
 
-    const ataqueNum = parseInt(ataque);
-    const defensaNum = parseInt(defensa);
+
     try {
 
-        const ataque = isNaN(ataqueNum) ? 0 : ataqueNum;
-        const defensa = isNaN(defensaNum) ? 0 : defensaNum;
-        // Verificar si ya existe un Pokémon con el mismo nombre
-        const existingPokemon = await Pokemon.findOne({
+
+        const existingPokemon = await Dog.findOne({
             where: {
                 name: name
             }
@@ -29,41 +23,33 @@ const postDogs = async (req, res) => {
         // Si ya existe, enviar un mensaje de error
         if (existingPokemon) {
             return res.status(400).json({
-                error: 'Ya existe un Pokémon con ese nombre.'
+                error: 'Ya existe un Perro con ese nombre.'
             });
         }
 
         // Si no existe, crear el nuevo Pokémon
-        const newPokemon = await Pokemon.create({
+        const newPokemon = await Dog.create({
+            imagen,
             name,
-            image,
-            vida,
-            ataque,
-            defensa,
-            velocidad,
-            altura,
-            peso,
+            height,
+            weight,
+            life_span,
         });
 
-        const typesToAssociate = await Type.findAll({
+        const temperamentsToAssociate = await Temperaments.findAll({
             where: {
-                name: types  
+                name: temperament
             }
         });
 
-        if (typesToAssociate.length < 2) {
-            await newPokemon.destroy(); 
-            return res.status(400).json({
-                error: 'Se requieren al menos dos tipos para un Pokémon.'
-            });
-        }
-        await newPokemon.setTypes(typesToAssociate);
+       
+        await newPokemon.setTemperaments(temperamentsToAssociate);
 
         res.status(200).json(newPokemon);
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            error: 'Error al crear el nuevo Pokémon'
+            error: 'Error al crear el nuevo Perro'
         });
     }
 };

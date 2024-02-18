@@ -1,0 +1,14 @@
+.home{
+    display: flex;
+    flex-direction: column;
+}
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 10px ;
+}
+.button{
+    margin: 10px;
+
+}
