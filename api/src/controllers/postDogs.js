@@ -13,15 +13,14 @@ const postDogs = async (req, res) => {
 
     try {
 
-
-        const existingPokemon = await Dog.findOne({
+        const existingDog = await Dog.findOne({
             where: {
                 name: name
             }
         });
 
         // Si ya existe, enviar un mensaje de error
-        if (existingPokemon) {
+        if (existingDog) {
             return res.status(400).json({
                 error: 'Ya existe un Perro con ese nombre.'
             });
@@ -43,9 +42,9 @@ const postDogs = async (req, res) => {
         });
 
        
-        await newPokemon.setTemperaments(temperamentsToAssociate);
+        await newDog.setTemperaments(temperamentsToAssociate);
 
-        res.status(200).json(newPokemon);
+        res.status(200).json(newDog);
     } catch (error) {
         console.error(error);
         res.status(500).json({

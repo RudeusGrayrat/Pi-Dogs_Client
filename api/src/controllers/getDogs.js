@@ -15,7 +15,10 @@ const getDogs = async (req, res) => {
             const imagen = ob.data.url;
             dogName.imagen = imagen;
             if (Dog) {
-                Dog.findOne({
+                Dog.findAll({
+                    where: {
+                        name: name
+                    },
                     include: {
                         model: Temperaments,
                         attributes: ["name"],
@@ -27,6 +30,15 @@ const getDogs = async (req, res) => {
             }
             return res.status(200).json(apiName);
         } else {
+            const dogsBD = await Dog.findAll({
+                include: {
+                    model: Temperaments,
+                    attributes: ["name"],
+                    through: {
+                        attributes: []
+                    }
+                },
+            });
             const apiResponse = await axios.get(`https://api.thedogapi.com/v1/breeds?apy_key=${YOUR_API_KEY}`);
             const dogs = apiResponse.data;
             const limite = dogs.slice(startIdx, endIdx ); 
@@ -37,7 +49,8 @@ const getDogs = async (req, res) => {
                     dog.imagen = imageUrl;
                 }
             }
-            return res.status(200).json(limite);
+            const allDogs = [...dogsBD, ...limite]
+            return res.status(200).json(allDogs);
         }
     } catch (error) {
         console.error(error);
