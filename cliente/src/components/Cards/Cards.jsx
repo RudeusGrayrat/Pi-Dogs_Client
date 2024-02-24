@@ -9,56 +9,34 @@ function Cards() {
     const dogs = useSelector((state) => state.dogName)
     const characters = useSelector((state) => state.allDogs)
     const slice8 = useSelector((state) => state.paginado);
-    const paginaActual = useSelector((state) => state.paginaActual);
 
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchDogs(0 ,48 ))
+        dispatch(fetchDogs())
     }, [])
 
-    const respuesta = dogs?.length > 0 ? dogs : characters.slice(0 + slice8, 8+ slice8)
-
+    const respuesta = dogs?.length > 0 ? dogs : characters.slice(0 + slice8, 8 + slice8)
 
     return (
         <div className={styles.home}>
             <div>
-                <Filters/>
+                <Filters />
             </div>
             <div className={styles.cards}>
 
                 {(respuesta?.map((char) => {
-                    if (char.sprites) {
+                    if (char.id) {
                         return (
                             <Card
                                 key={char.id}
                                 id={char.id}
-                                image={char.imagen}
                                 name={char.name}
-                                types={char.types?.map((ty) => ty.type.name)}
+                                image={char.imagen || char.image.url}
+                                temperament={char?.temperament?.split(", ").slice(0, 2).join(", ") || char?.temperaments[0].name}
+                                peso={char.weight?.metric || char.weight}
                             />
-                        )
+                        );
 
-                    } else if (char.id) {
-                        return (
-                            <Card
-                                key={char.id}
-                                id={char.id}
-                                name={char.name}
-                                image={char.imagen}
-                                temperament={char?.temperament.split(", ").slice(0,2).join(", ")}
-                                peso={char.weight?.metric}
-                            />
-                        );
-                    } else if (char.url) {
-                        const idapi = Number(char.url.split("/").slice(-2, -1)[0]);
-                        return (
-                            <Card
-                                key={idapi}
-                                id={idapi}
-                                name={char.name}
-                                url={char.url}
-                            />
-                        );
                     } else {
                         console.warn('Data is missing or incomplete for character:', char);
                         return null;

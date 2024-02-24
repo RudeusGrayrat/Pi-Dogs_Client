@@ -1,16 +1,17 @@
 import axios from 'axios';
 export const GET_ALL_DOGS = 'GET_ALL_DOGS';
-// export const GET_ALL_TYPES = 'GET_ALL_TYPES';
+export const GET_ALL_TEMPERAMENTS = 'GET_ALL_TEMPERAMENTS';
 export const GET_DETAIL_DOG = 'GET_DETAIL_DOG'
 export const SEARCH_DOG = 'SEARCH_DOG'
+export const FILTER_U_ORDER = 'FILTER_U_ORDER'
 export const CLEAN_DOG = 'CLEAN_DOG'
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const SLICE_CHANGE = 'SLICE_CHANGE';
 export const NUMBER = 'NUMBER';
 
-export const fetchDogs = (ini, fin) => async (dispatch) => {
+export const fetchDogs = () => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/dogs?ini=${ini}&fin=${fin}`);
+    const response = await axios.get(`http://localhost:3001/dogs`);
     const dogs = response.data;
     dispatch({
       type: GET_ALL_DOGS,
@@ -22,18 +23,18 @@ export const fetchDogs = (ini, fin) => async (dispatch) => {
 };
 
 
-// export const fetchTypes = () => async (dispatch) => {
-//   try {
-//     const response = await axios.get(`http://localhost:3001/types`);
-//     const tipos = response.data;
-//     dispatch({
-//       type: GET_ALL_TYPES,
-//       payload: tipos,
-//     });
-//   } catch (error) {
-//     alert('Error fetching pokemons:', error);
-//   }
-// };
+export const fetchTemperaments = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/temperaments`);
+    const temperaments = response.data;
+    dispatch({
+      type: GET_ALL_TEMPERAMENTS,
+      payload: temperaments,
+    });
+  } catch (error) {
+    alert('Error fetching temperament:', error);
+  }
+};
 
 export const fetchCharacter = (id) => async (dispatch) => {
   try {
@@ -61,7 +62,28 @@ export const searchDog = (name) => async (dispatch) => {
     console.error('Error fetching character:', error);
   }
 };
+export const filter = () => async (dispatch) => {
+  try {
+    
 
+    dispatch({
+      type: FILTER_U_ORDER,
+    });
+  } catch (error) {
+    console.error('Error fetching character:', error);
+  }
+};
+export const order = () => async (dispatch) => {
+  try {
+    
+
+    dispatch({
+      type: FILTER_U_ORDER,
+    });
+  } catch (error) {
+    console.error('Error fetching character:', error);
+  }
+};
 export const cleanSearch = () => (dispatch) => {
   const vacio = []
   dispatch({

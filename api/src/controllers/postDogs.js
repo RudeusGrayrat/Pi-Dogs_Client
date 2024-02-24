@@ -27,7 +27,7 @@ const postDogs = async (req, res) => {
         }
 
         // Si no existe, crear el nuevo Pokémon
-        const newPokemon = await Dog.create({
+        const newDog = await Dog.create({
             imagen,
             name,
             height,

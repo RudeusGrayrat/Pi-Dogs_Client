@@ -3,6 +3,11 @@ const { YOUR_APY_KEY } = process.env;
 const { Dog, Temperaments } = require("../db");
 
 const getDogsById = async (req, res) => {
+    const isUUID = (str) => {
+        const uuidRegex =
+          /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+        return uuidRegex.test(str);
+      };
     try {
         const { idRaza } = req.params
         if (isUUID(idRaza)) {

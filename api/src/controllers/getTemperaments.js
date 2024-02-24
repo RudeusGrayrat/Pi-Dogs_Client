@@ -14,7 +14,6 @@ const getTemperaments = async (req, res) => {
                 dog.temperament?.split(', ').forEach(temperament => temp.add(temperament.trim()));
             });
             const uniqueTemperaments = [...temp];
-            console.log(temp);
             const savedTemperaments = await Temperaments.bulkCreate(
                 uniqueTemperaments.map((temperament) => {
                     return { name: temperament };

@@ -5,11 +5,7 @@ import { useState, } from 'react';
 
 
 function Card(props) {
-  const { id, image, name, peso, temperament, url } = props;
-  const [type, setType] = useState([]);
-
-
-  const tipo = type.map((ty) => ty.type.name);
+  const { id, image, name, peso, temperament } = props;
 
   return (
     <Link to={`/detail/${id}`} className={styles.namelink}>

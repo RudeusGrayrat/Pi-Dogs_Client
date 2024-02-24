@@ -2,19 +2,21 @@ import {
   GET_ALL_DOGS,
   GET_DETAIL_DOG,
   SEARCH_DOG,
+  FILTER_U_ORDER,
   CLEAN_DOG,
   CHANGE_PAGE,
   SLICE_CHANGE,
   NUMBER,
-  // GET_ALL_TYPES
+  GET_ALL_TEMPERAMENTS
 }
   from "./actions";
 
 const initialState = {
   allDogs: [],
   dogName:[],
+  filter_u_order: [],
   dogDetails: {},
-  // tipos:[],
+  temperaments:[],
   paginaActual: 1,
   paginado: 0,
 }
@@ -38,6 +40,13 @@ const rootReducer = (state = initialState, action) => {
         dogName: action.payload,
         errors: {},
       };
+      case FILTER_U_ORDER:
+      return {
+        ...state,
+        filter_u_order: action.payload,
+        errors: {},
+      };
+
     case CLEAN_DOG:
       return {
         ...state,
@@ -59,11 +68,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         paginado: action.payload,
       };
-    // case GET_ALL_TYPES:
-    //   return {
-    //     ...state,
-    //     tipos: action.payload
-    //   }
+    case GET_ALL_TEMPERAMENTS:
+      return {
+        ...state,
+        temperaments: action.payload
+      }
     default:
       return state;
   }

@@ -1,57 +1,108 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { fetchTypes } from "../../redux/actions";
+import { fetchTemperaments } from "../../redux/actions";
 
 function Filters() {
 
-    const [filterType, setFilterType] = useState("");
+    
+
+    const [filter, setFilter] = useState({
+        temperament: [],
+        origin: ""
+    });
+    const [order, setOrder] = useState({
+        asc_desc: "",
+        tipo: ""
+
+    });
     const [showFilter, setShowFilter] = useState(false);
     const [showOrder, setShowOrder] = useState(false);
-    const tipos = useSelector((state) => state.tipos)
+
+    const temperaments = useSelector((state) => state.temperaments)
     const dispatch = useDispatch()
 
-    const handleFilterChange = (e) => {
-        setFilterType(e.target.value);
+    const handleFilter = (e) => {
+        const { name, value } = e.target
+        if (name === "temperament") {
+            setFilter((data) => ({
+                ...data,
+                temperament: [...data.temperament, value],
+            }))
+        } else {
+
+            setFilter((data) => ({
+                ...data,
+                [name]: value
+            }))
+        }
+    };
+    const handleOrder = (e) => {
+        const { name, value } = e.target
+
+        setOrder((data) => ({
+            ...data,
+            [name]: value
+        }))
     };
 
-    const filter = () => {
+
+    const filterShow = () => {
         setShowFilter(true);
         setShowOrder(false);
-        // dispatch(fetchTypes())
+        dispatch(fetchTemperaments())
 
     };
 
-    const order = () => {
+    const ordershow = () => {
         setShowFilter(false);
         setShowOrder(true);
     };
+    const cerrar = () => {
+        setShowFilter(false);
+        setShowOrder(false);
+    };
+
+    console.log(filter);
+    console.log(order);
+
+
+
 
     return (
         <>
-            <button onClick={filter}>Filtrar</button>
-            <button onClick={order}>Ordenar</button>
+            <button onClick={filterShow}>Filtrar</button>
+            <button onClick={ordershow}>Ordenar</button>
 
             {showFilter && (
                 <div>
                     <label>
-                        Tipo:
-                        <select value={filterType} onChange={handleFilterChange}>
-                            {(tipos.map((tip) => {
-                                return <option
-                                    key={tip.id}
-                                    value={tip.name}>
-                                    {tip.name}
-                                </option>
-                            }))}
-                        </select>
-                    </label>
+                        Temperamento:</label>
+                    <select value={filter.temperament}
+                        onChange={handleFilter}
+                        multiple={true}
+                        name="temperament" >
+                        {(temperaments.map((tip) => {
+                            return <option
+                                key={tip.id}
+                                value={tip.name}
+                            >
+                                {tip.name}
+                            </option>
+                        }))}
+                    </select>
+
                     <label>
                         Origen:
-                        <select value={filterType} onChange={handleFilterChange}>
-                            <option value="api">API</option>
-                            <option value="all">Base de Datos</option>
+                        <select value={filter.origin}
+                            onChange={handleFilter}
+                            name="origin">
+                            <option value="Api" >API</option>
+                            <option value="BD">Base de Datos</option>
                         </select>
                     </label>
+                    <button type="button" onClick={handleFilter}>filtrar</button>
+                    <button type="submit" onClick={cerrar}>x</button>
+
                 </div>
             )}
 
@@ -59,17 +110,24 @@ function Filters() {
                 <div>
                     <label>
                         Ordenar:
-                        <select value={filterType} onChange={handleFilterChange}>
-                            <option value="alphabetical">Alfabético</option>
-                            <option value="attack">Ataque</option>
+                        <select value={order.tipo}
+                            onChange={handleOrder}
+                            name="tipo">
+                            <option value="alfabetico">Alfabético</option>
+                            <option value="peso">Peso</option>
                         </select>
                     </label>
                     <label>
-                        <select value={filterType} onChange={handleFilterChange}>
+                        <select value={order.asc_desc}
+                            onChange={handleOrder}
+                            name="asc_desc">
                             <option value="asc">Ascendente</option>
                             <option value="desc">Descendente</option>
                         </select>
                     </label>
+                    <button type="button" onClick={handleOrder}>ordenar</button>
+                    <button type="submit" onClick={cerrar}>x</button>
+
                 </div>
             )}
         </>
