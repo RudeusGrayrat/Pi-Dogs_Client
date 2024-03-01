@@ -9,20 +9,14 @@ function Detail(props) {
    const { id } = useParams();
 
    const character = useSelector((state) => state.dogDetails)
+   
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(fetchCharacter(id))
    }, [id])
 
-
-   const getTemperaments = () => {
-      if (!character.temperaments) return null;
-      if (character.temperaments.length === 1) {
-         return character.temperaments[0].name;
-      }
-      return character.temperament?.split(", ").slice(0,2).join(", ") 
-   };
-
+   
+   const temp =  character?.temperaments ? character.temperaments[0].name : character.temperament?.split(", ").slice(0,2).join(", ")  
    return (
       <div className={styles.detail}>
          {character ? (
@@ -32,7 +26,7 @@ function Detail(props) {
                   <h2>{character?.name}</h2>
                   <h2>{character?.weight?.metric || character?.weight}</h2>
                   <h2>{character?.height?.metric || character?.height}</h2>
-                  <h2>{getTemperaments()}</h2>
+                  <h2>{temp}</h2>
                   <h2>{character.life_span}</h2>
                </div>
                <div className={styles.ima}>

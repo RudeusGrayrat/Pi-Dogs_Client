@@ -21,9 +21,19 @@ h2 {
     color: #0c9f24;
 
 }
-
+.form{
+    display: flex;
+    flex-direction: row;
+    margin: 1px 0px 1px 0px;
+    margin: 1px;
+}
 label {
+    color: white;
     background-color: green;
+    padding: 5px;
+    margin: 0px 5px 0px 1px;
+    border-radius: 5px;
+
 }
 
 .button {

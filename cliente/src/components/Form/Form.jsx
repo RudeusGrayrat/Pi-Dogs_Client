@@ -60,7 +60,7 @@ const Form = () => {
         <div className={styles.todo}>
             <h2>FORM PAGE</h2>
             <form>
-                <div>
+                <div className={styles.form}>
                     <label >Nombre:</label>
                     <input
                         type='text'
@@ -69,16 +69,17 @@ const Form = () => {
                         value={userData.name}
                         onChange={handleChange} />
                 </div>
-                <div>
+                <div className={styles.form}>
                     <label >Imagen:</label>
                     <input
                         type='text'
                         id='imagen'
                         name='imagen'
+                        placeholder='http://imagen.png'
                         value={userData.imagen}
                         onChange={handleChange} />
                 </div>
-                <div>
+                <div className={styles.form}>
                     <label >Altura:</label>
                     <input type='text'
                         id='height'
@@ -86,7 +87,7 @@ const Form = () => {
                         value={userData.height}
                         onChange={handleChange} />
                 </div>
-                <div>
+                <div className={styles.form}>
                     <label >Peso:</label>
                     <input
                         type='text'

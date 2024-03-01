@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTemperaments } from "../../redux/actions";
+import { fetchTemperaments, filters, } from "../../redux/actions";
 
 function Filters() {
 
-    
+    const dogs = useSelector((state) => state.allDogs)
+
 
     const [filter, setFilter] = useState({
         temperament: [],
         origin: ""
     });
     const [order, setOrder] = useState({
+        tipo: "",
         asc_desc: "",
-        tipo: ""
 
     });
     const [showFilter, setShowFilter] = useState(false);
@@ -62,10 +63,17 @@ function Filters() {
         setShowOrder(false);
     };
 
-    console.log(filter);
-    console.log(order);
-
-
+    const action = () => {
+        dispatch(filters(dogs, filter.temperament, filter.origin, order.tipo, order.asc_desc))
+        setFilter({
+            temperament: [],
+            origin: ""
+        })
+        setOrder({
+            tipo: "",
+            asc_desc: ""
+        })
+    }
 
 
     return (
@@ -96,11 +104,12 @@ function Filters() {
                         <select value={filter.origin}
                             onChange={handleFilter}
                             name="origin">
-                            <option value="Api" >API</option>
-                            <option value="BD">Base de Datos</option>
+                            <option value="">Seleccionar Origen</option>
+                            <option value="api" >API</option>
+                            <option value="bd">Base de Datos</option>
                         </select>
                     </label>
-                    <button type="button" onClick={handleFilter}>filtrar</button>
+                    <button type="button" onClick={action}>filtrar</button>
                     <button type="submit" onClick={cerrar}>x</button>
 
                 </div>
@@ -113,7 +122,8 @@ function Filters() {
                         <select value={order.tipo}
                             onChange={handleOrder}
                             name="tipo">
-                            <option value="alfabetico">Alfabético</option>
+                            <option value="">Seleccionar </option>
+                            <option value="nombre">Nombre</option>
                             <option value="peso">Peso</option>
                         </select>
                     </label>
@@ -121,11 +131,12 @@ function Filters() {
                         <select value={order.asc_desc}
                             onChange={handleOrder}
                             name="asc_desc">
+                            <option value="">Seleccionar </option>
                             <option value="asc">Ascendente</option>
                             <option value="desc">Descendente</option>
                         </select>
                     </label>
-                    <button type="button" onClick={handleOrder}>ordenar</button>
+                    <button type="button" onClick={action}>ordenar</button>
                     <button type="submit" onClick={cerrar}>x</button>
 
                 </div>
