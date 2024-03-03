@@ -5,7 +5,7 @@ import { fetchCharacter } from '../../redux/actions';
 import styles from './Detail.module.css';
 import style from '../Card/Card.module.css';
 
-function Detail(props) {
+function Detail() {
    const { id } = useParams();
 
    const character = useSelector((state) => state.dogDetails)
@@ -14,9 +14,10 @@ function Detail(props) {
    useEffect(() => {
       dispatch(fetchCharacter(id))
    }, [id])
-
    
-   const temp =  character?.temperaments ? character.temperaments[0].name : character.temperament?.split(", ").slice(0,2).join(", ")  
+   const array = character.temperaments?.map((t)=>{ return t.name })
+   const temp =  character?.temperaments ? array?.slice(0,2).join(", ") : character.temperament?.split(", ").slice(0,2).join(", ")  
+
    return (
       <div className={styles.detail}>
          {character ? (

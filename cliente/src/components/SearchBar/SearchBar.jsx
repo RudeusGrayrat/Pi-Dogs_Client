@@ -13,6 +13,7 @@ export default function SearchBar(props) {
    }
    const handleSearch = ()=>{
       dispatch(searchDog(name))
+      setName("")
    }
 
     return (

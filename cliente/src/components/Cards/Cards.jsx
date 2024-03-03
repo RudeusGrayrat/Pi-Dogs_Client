@@ -17,14 +17,13 @@ function Cards() {
     }, [])
 
     let respuesta = null
-    if (filtros.length > 0) {
+    if (filtros?.length > 0) {
         respuesta = filtros
     } else if(dogs?.length > 0) {
         respuesta = dogs
     } else {
         respuesta = characters
     }
-
 
     return (
         <div className={styles.home}>

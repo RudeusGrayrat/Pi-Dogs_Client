@@ -53,10 +53,11 @@ export const searchDog = (name) => async (dispatch) => {
   try {
     const response = await axios.get(`http://localhost:3001/dogs?name=${name}`);
     const dog = response.data;
+    const respuesta = !name ? null : dog
 
     dispatch({
       type: SEARCH_DOG,
-      payload: dog,
+      payload: respuesta
     });
   } catch (error) {
     console.error('Error fetching character:', error);
@@ -67,20 +68,20 @@ export const filters = (dogs, temperamento, origin, tipo, ascDesc) => async (dis
   try {
     let temp = null
     let filtered = null
-    if (temperamento?.length > 0) {
+    if (temperamento || origin) {
       filtered = dogs.filter((dog) => {
         if (origin === "api") {
           temp = dog.temperament
         } else if (origin === "bd") {
-          temp = dog.temperaments && dog.temperaments.length > 0 && dog.temperaments[0].name
+          temp = dog.temperaments && dog.temperaments?.length > 0 && dog.temperaments[0]?.name
         } else {
-          temp = dog.temperament || (dog.temperaments && dog.temperaments.length > 0 && dog.temperaments[0].name);
+          temp = dog.temperament || (dog.temperaments && dog.temperaments.length > 0 && dog.temperaments[0]?.name);
         }
         return temp && temp.includes(temperamento);
       });
-    }else  {
-      if (tipo=== "nombre") {
-        filtered = dogs.slice().sort((a, b) => {
+    } else {
+      if (tipo === "nombre") {
+        filtered = dogs?.slice().sort((a, b) => {
           const nameA = a.name.toUpperCase();
           const nameB = b.name.toUpperCase();
           if (ascDesc === "asc") {
@@ -94,17 +95,17 @@ export const filters = (dogs, temperamento, origin, tipo, ascDesc) => async (dis
           return 0;
         })
       }
-      if (tipo==="peso") {
+      if (tipo === "peso") {
         filtered = dogs.slice().sort((a, b) => {
           let weightA = a.weight?.metric || a.weight
           let weightB = b.weight?.metric || b.weight
-          
+
           const pesoA = parseFloat(weightA.split(" - ")[0]);
           const pesoB = parseFloat(weightB.split(" - ")[0]);
-          if (ascDesc==="asc") {
+          if (ascDesc === "asc") {
             return pesoA - pesoB
           }
-          if (ascDesc === "desc"){
+          if (ascDesc === "desc") {
             return pesoB - pesoA;
           }
           return 0;
