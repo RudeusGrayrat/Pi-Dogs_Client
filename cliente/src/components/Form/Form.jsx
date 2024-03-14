@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTemperaments } from "../../redux/actions";
 import validateForm from './Validation';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
     const temperaments = useSelector((state) => state.temperaments)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     useEffect(() => {
         dispatch(fetchTemperaments())
     }, [])
@@ -64,6 +66,7 @@ const Form = () => {
                 life_span: "",
                 temperament: [],
             });
+            navigate("/home")
         } else {
             setErrors(validationErrors);
         }

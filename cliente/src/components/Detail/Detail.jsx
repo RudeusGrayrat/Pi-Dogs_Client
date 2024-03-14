@@ -16,7 +16,7 @@ function Detail() {
    }, [id])
    
    const array = character.temperaments?.map((t)=>{ return t.name })
-   const temp =  character?.temperaments ? array?.slice(0,2).join(", ") : character.temperament?.split(", ").slice(0,2).join(", ")  
+   const temp =  character?.temperaments ? array?.join(", ") : character.temperament?.split(", ").join(", ")  
 
    return (
       <div className={styles.detail}>

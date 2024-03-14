@@ -8,7 +8,6 @@ export const CLEAN_DOG = 'CLEAN_DOG'
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const INI = 'INI';
 export const SLICE_CHANGE = 'SLICE_CHANGE';
-export const NUMBER = 'NUMBER';
 
 export const fetchDogs = () => async (dispatch) => {
   try {
@@ -73,7 +72,7 @@ export const filters = (dogs, temperamento, origin, tipo, ascDesc) => async (dis
         if (origin === "api") {
           temp = dog.temperament
         } else if (origin === "bd") {
-          temp = dog.temperaments && dog.temperaments?.length > 0 && dog.temperaments[0]?.name
+          temp =  dog.temperaments && dog.temperaments?.length > 0 && dog.temperaments[0]?.name// && dog.temperaments.map(name => name.name).join(", ")
         } else {
           temp = dog.temperament || (dog.temperaments && dog.temperaments.length > 0 && dog.temperaments[0]?.name);
         }
@@ -144,10 +143,10 @@ export const inicio = () => (dispatch) => {
     payload: 0
   })
 }
-export const sliceMas = (ejemplo) => (dispatch) => {
+export const sliceMas = (paginado) => (dispatch) => {
   dispatch({
     type: SLICE_CHANGE,
-    payload: ejemplo + 8
+    payload: paginado + 8
   })
 }
 

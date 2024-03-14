@@ -19,12 +19,11 @@ function Cards() {
     let respuesta = null
     if (filtros?.length > 0) {
         respuesta = filtros
-    } else if(dogs?.length > 0) {
+    } else if (dogs?.length > 0) {
         respuesta = dogs
     } else {
         respuesta = characters
     }
-
     return (
         <div className={styles.home}>
             <div>
@@ -40,7 +39,7 @@ function Cards() {
                                 id={char.id}
                                 name={char.name}
                                 image={char.imagen || char.image.url}
-                                temperament={char.temperaments ? char?.temperaments[0]?.name : char?.temperament?.split(", ").slice(0, 2).join(", ")}
+                                temperament={char.temperaments ? char?.temperaments.map(name => name.name).slice(0, 2).join(", ") + " ..." : char?.temperament?.split(", ").slice(0, 2).join(", ") + " ..."}
                                 peso={char.weight?.metric || char.weight}
                             />
                         );

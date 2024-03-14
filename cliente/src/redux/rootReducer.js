@@ -7,7 +7,6 @@ import {
   CHANGE_PAGE,
   INI,
   SLICE_CHANGE,
-  NUMBER,
   GET_ALL_TEMPERAMENTS
 }
   from "./actions";
@@ -70,11 +69,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         paginado: action.payload,
       };
-    case NUMBER:
-      return {
-        ...state,
-        paginado: action.payload,
-      };
+
     case GET_ALL_TEMPERAMENTS:
       return {
         ...state,

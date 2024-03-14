@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTemperaments, filters, } from "../../redux/actions";
 
 function Filters() {
-
     const dogs = useSelector((state) => state.allDogs)
-
 
     const [filter, setFilter] = useState({
         temperament: "",
@@ -24,12 +22,18 @@ function Filters() {
 
     const handleFilter = (e) => {
         const { name, value } = e.target
-
-
-        setFilter((data) => ({
+        // if(name==="temperament"){
+        //     setFilter((data) => ({
+        //         ...data,
+        //         temperament: [...data.temperament, value],
+        //     }))
+        // }else{
+            setFilter((data) => ({
             ...data,
             [name]: value
         }))
+        // }
+        
 
     };
     const handleOrder = (e) => {
@@ -70,7 +74,6 @@ function Filters() {
         })
     }
 
-
     return (
         <>
             <button onClick={filterShow}>Filtrar</button>
@@ -82,7 +85,8 @@ function Filters() {
                         Temperamento:</label>
                     <select value={filter.temperament}
                         onChange={handleFilter}
-                        name="temperament" >
+                        name="temperament" 
+                        >
                         <option value="">Seleccionar Temperamento</option>
                         {(temperaments.map((tip) => {
                             return <option
