@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./SearchBar.module.css" 
 import { useDispatch } from "react-redux";
-import { searchDog } from "../../redux/actions";
+import { searchDog, inicio, changePage, next, preview } from "../../redux/actions";
 
 export default function SearchBar(props) {
    const dispatch = useDispatch()
@@ -14,6 +14,9 @@ export default function SearchBar(props) {
    const handleSearch = ()=>{
       dispatch(searchDog(name))
       setName("")
+      dispatch(changePage(1, 0))
+      dispatch(next(true))
+      dispatch(preview(false))
    }
 
     return (
