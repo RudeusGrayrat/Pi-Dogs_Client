@@ -2,10 +2,10 @@ import { NavLink, useLocation, } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import styles from './Nav.module.css';
 import { useDispatch, } from 'react-redux';
-import { clean, inicio } from '../../redux/actions';
+import { clean, inicio, changePage, next, preview} from '../../redux/actions';
 
-function Nav(props) {
-   
+function Nav() {
+
    const location = useLocation()
    const dispatch = useDispatch()
 
@@ -15,6 +15,9 @@ function Nav(props) {
    const Clean = () => {
       dispatch(inicio())
       dispatch(clean())
+      dispatch(changePage(1, 0))
+      dispatch(next(true))
+      dispatch(preview(false))
    };
 
 
@@ -24,7 +27,7 @@ function Nav(props) {
             className={styles.navlink}>
             <button className={styles.button}
                onClick={Clean}
-               >
+            >
 
                Home
             </button>

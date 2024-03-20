@@ -8,6 +8,8 @@ export const CLEAN_DOG = 'CLEAN_DOG'
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const INI = 'INI';
 export const SLICE_CHANGE = 'SLICE_CHANGE';
+export const SIGUIENTE = 'SIGUIENTE';
+export const ATRAS ='ATRAS';
 
 export const fetchDogs = () => async (dispatch) => {
   try {
@@ -157,4 +159,15 @@ export const sliceMenos = (ejemplo) => (dispatch) => {
   })
 }
 
-
+export const next = (trueorfalse) => (dispatch) => {
+  dispatch({
+    type: SIGUIENTE,
+    payload: trueorfalse
+  })
+}
+export const preview = (trueorfalse) => (dispatch) => {
+  dispatch({
+    type: ATRAS,
+    payload: trueorfalse
+  })
+}

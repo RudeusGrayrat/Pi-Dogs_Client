@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import styles from './Pagination.module.css'
-import { changePage, sliceMas, sliceMenos } from "../../redux/actions";
+import { changePage, sliceMas, sliceMenos,  next, preview } from "../../redux/actions";
 
 function Pagination() {
     const buscado = useSelector((state) => state.dogName);
@@ -9,8 +8,8 @@ function Pagination() {
     const paginado = useSelector((state) => state.paginado);
     const paginaActual = useSelector((state) => state.paginaActual);
     const filtros = useSelector((state) => state.filter);
-    const [showSiguiente, setShowSiguiente] = useState(true);
-    const [showAtras, setShowAtras] = useState(false);
+    const showSiguiente = useSelector((state) => state.siguiente)
+    const showAtras = useSelector((state) => state.atras)
     const dispatch = useDispatch()
 
     let respuesta = null
@@ -24,10 +23,10 @@ function Pagination() {
 
     const atras = () => {
         if (paginado < 8) {
-            setShowAtras(false)
+            dispatch(preview(false))
             return null
         } else {
-            setShowSiguiente(true)
+            dispatch(next(true))
             dispatch(changePage(paginaActual, - 1))
             dispatch(sliceMenos(paginado))
 
@@ -35,10 +34,10 @@ function Pagination() {
     }
     const siguiente = () => {
         if (respuesta.length / 8 <= paginaActual) {
-            setShowSiguiente(false)
+            dispatch(next(false))
             return null
         } else {
-            setShowAtras(true)
+            dispatch(preview(true))
             dispatch(changePage(paginaActual, 1))
             dispatch(sliceMas(paginado))
         }

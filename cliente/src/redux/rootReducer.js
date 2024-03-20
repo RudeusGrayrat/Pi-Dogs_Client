@@ -7,7 +7,9 @@ import {
   CHANGE_PAGE,
   INI,
   SLICE_CHANGE,
-  GET_ALL_TEMPERAMENTS
+  GET_ALL_TEMPERAMENTS,
+  SIGUIENTE,
+  ATRAS
 }
   from "./actions";
 
@@ -19,6 +21,8 @@ const initialState = {
   temperaments: [],
   paginaActual: 1,
   paginado: 0,
+  siguiente: true,
+  atras: false,
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -75,6 +79,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         temperaments: action.payload
       }
+
+    case SIGUIENTE:
+      return {
+        ...state,
+        siguiente: action.payload
+      }
+
+    case ATRAS:
+      return {
+        ...state,
+        atras: action.payload
+      }
+    
     default:
       return state;
   }

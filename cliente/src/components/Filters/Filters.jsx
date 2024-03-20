@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTemperaments, filters, } from "../../redux/actions";
+import { fetchTemperaments, filters, changePage, inicio} from "../../redux/actions";
 
 function Filters() {
     const dogs = useSelector((state) => state.allDogs)
@@ -72,6 +72,8 @@ function Filters() {
             tipo: "",
             asc_desc: ""
         })
+        dispatch(inicio())
+        dispatch(changePage(1, 0))
     }
 
     return (
