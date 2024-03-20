@@ -52,11 +52,13 @@ const Form = () => {
         }));
     };
 
+    const validationErrors = validateForm(userData)
+    const arrayofValidation = Object.keys(validationErrors)
+
     const createPokemon = async () => {
         const url = 'http://localhost:3001/dogs'
 
-        const validationErrors = validateForm(userData)
-        if (Object.keys(validationErrors).length === 0) {
+        if (arrayofValidation.length === 0) {
             await axios.post(url, userData)
             setUseData({
                 name: '',
@@ -66,7 +68,7 @@ const Form = () => {
                 life_span: "",
                 temperament: [],
             });
-            navigate("/home")
+
         } else {
             setErrors(validationErrors);
         }
@@ -74,8 +76,11 @@ const Form = () => {
 
     const click = () => {
         createPokemon()
+        navigate("/home")
     }
-    console.log(userData);
+
+    let deshabilitar = arrayofValidation.length > 0 ? true : false
+
 
     return (
         <div className={styles.todo}>
@@ -172,7 +177,7 @@ const Form = () => {
                         }))}
                     </select>
                 </div>
-                <button type="submit" onClick={click}>Crear Dog</button>
+                <button type="submit" onClick={click} disabled={deshabilitar}>Crear Dog</button>
 
             </form>
         </div >
