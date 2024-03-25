@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./SearchBar.module.css" 
 import { useDispatch } from "react-redux";
-import { searchDog, inicio, changePage, next, preview } from "../../redux/actions";
+import { searchDog, changePage, next, preview } from "../../redux/actions";
 
 export default function SearchBar(props) {
    const dispatch = useDispatch()
@@ -21,7 +21,10 @@ export default function SearchBar(props) {
 
     return (
        <div className={styles.searchBar}>
-          <input className={styles.buscador} type='search' value={name} onChange={handleChange}/>
+          <input className={styles.buscador} 
+          type='search' value={name} 
+          placeholder="Buscar perro..."
+          onChange={handleChange}/>
           <button onClick={handleSearch}>Buscar</button>
        </div>
     );
