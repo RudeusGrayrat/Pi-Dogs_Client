@@ -1,15 +1,16 @@
 import Card from '../Card/Card';
 import styles from './Cards.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDogs } from '../../redux/actions';
+import { fetchDogs} from '../../redux/actions';
 import { useEffect } from 'react';
 import Filters from '../Filters/Filters';
 
 function Cards() {
-    const dogs = useSelector((state) => state.dogName)
+    const dogsName = useSelector((state) => state.dogName)
     const characters = useSelector((state) => state.allDogs)
     const slice8 = useSelector((state) => state.paginado);
     const filtros = useSelector((state) => state.filter);
+    const orden = useSelector((state) => state.order);
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -19,8 +20,10 @@ function Cards() {
     let respuesta = null
     if (filtros?.length > 0) {
         respuesta = filtros
-    } else if (dogs?.length > 0) {
-        respuesta = dogs
+    } else if (orden?.length > 0) {
+        respuesta = orden
+    } else if (dogsName?.length > 0) {
+        respuesta = dogsName
     } else {
         respuesta = characters
     }

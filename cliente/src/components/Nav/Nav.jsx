@@ -28,8 +28,7 @@ function Nav() {
             <button className={styles.button}
                onClick={Clean}
             >
-
-               Home
+               Inicio
             </button>
          </NavLink>
 
@@ -39,7 +38,7 @@ function Nav() {
          <NavLink to="/create"
             className={styles.navlink}>
             <button className={styles.button}>
-               +
+               Crear
             </button>
          </NavLink>
 

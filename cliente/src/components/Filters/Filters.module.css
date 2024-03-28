@@ -1,0 +1,54 @@
+.cerrar, .cerrar2{
+    margin: 10px;
+    font-size: 20px;
+    padding: 2px 14px 2px 14px;
+    border: 2px solid #d5c7c700;
+    border-radius: 15px;
+    box-shadow: 0px 0px 2px #00000000;
+    color: white;
+    border: 0px solid;
+    box-shadow: 0px 0px 2px #454545;
+    background-color: rgb(51, 124, 156);
+}
+.boton{
+    margin: 10px;
+    font-size: 20px;
+    padding: 2px 14px 2px 14px;
+    border-radius: 15px;
+    border: 0px solid;
+    box-shadow: 0px 0px 2px #454545;
+    background-color: rgb(255, 229, 134);
+}
+.cerrar:hover{
+    background-color: rgb(2, 58, 95);
+}
+
+.modal{
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+}
+.alert{
+    background-color: rgba(255, 255, 255, 0.705);
+    margin: 30px;
+    padding: 45px;
+    font-size: 50px;
+    font-weight: 560;
+    border-radius: 19px;
+}
+.div2{
+    display: flex;
+    justify-content: center;
+    margin: 40px 0px 0px 0px;
+
+}
+@media only screen and (max-width:480px) {
+    .boton{
+
+        margin: 10px 5px 5px 5px;
+        padding: 10px;
+        font-size: 15px;
+        align-items: flex-start;
+    }
+}

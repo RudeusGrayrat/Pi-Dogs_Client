@@ -1,9 +1,27 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTemperaments, filters, changePage, inicio} from "../../redux/actions";
+import { fetchTemperaments, filters, changePage, inicio, orders } from "../../redux/actions";
+import styles from "./Filters.module.css";
 
 function Filters() {
-    const dogs = useSelector((state) => state.allDogs)
+    const dogsName = useSelector((state) => state.dogName)
+    const characters = useSelector((state) => state.allDogs)
+    const filtros = useSelector((state) => state.filter);
+    const orden = useSelector((state) => state.order);
+    const temperaments = useSelector((state) => state.temperaments)
+    const [showAlert, setShowAlert] = useState(false)
+    const dispatch = useDispatch()
+
+    let respuesta = null
+    if (filtros?.length > 0) {
+        respuesta = filtros
+    } else if (orden?.length > 0) {
+        respuesta = orden
+    } else if (dogsName?.length > 0) {
+        respuesta = dogsName
+    } else {
+        respuesta = characters
+    }
 
     const [filter, setFilter] = useState({
         temperament: "",
@@ -17,8 +35,6 @@ function Filters() {
     const [showFilter, setShowFilter] = useState(false);
     const [showOrder, setShowOrder] = useState(false);
 
-    const temperaments = useSelector((state) => state.temperaments)
-    const dispatch = useDispatch()
 
     const handleFilter = (e) => {
         const { name, value } = e.target
@@ -28,12 +44,12 @@ function Filters() {
         //         temperament: [...data.temperament, value],
         //     }))
         // }else{
-            setFilter((data) => ({
+        setFilter((data) => ({
             ...data,
             [name]: value
         }))
         // }
-        
+
 
     };
     const handleOrder = (e) => {
@@ -50,7 +66,6 @@ function Filters() {
         setShowFilter(true);
         setShowOrder(false);
         dispatch(fetchTemperaments())
-
     };
 
     const ordershow = () => {
@@ -62,12 +77,23 @@ function Filters() {
         setShowOrder(false);
     };
 
-    const action = () => {
-        dispatch(filters(dogs, filter.temperament, filter.origin, order.tipo, order.asc_desc))
+    const cerrarAlert = () => {
+        setShowAlert(false);
+    };
+    
+    const actionFilter = () => {
+        dispatch(filters(respuesta, filter.temperament, filter.origin, setShowAlert))
+        
         setFilter({
             temperament: "",
             origin: ""
         })
+        dispatch(inicio())
+        dispatch(changePage(1, 0))
+    }
+
+    const actionOrder = () => {
+        dispatch(orders(respuesta, order.tipo, order.asc_desc))
         setOrder({
             tipo: "",
             asc_desc: ""
@@ -78,8 +104,8 @@ function Filters() {
 
     return (
         <>
-            <button onClick={filterShow}>Filtrar</button>
-            <button onClick={ordershow}>Ordenar</button>
+            <button onClick={filterShow} className={styles.boton}>Filtrar</button>
+            <button onClick={ordershow} className={styles.boton}>Ordenar</button>
 
             {showFilter && (
                 <div>
@@ -87,9 +113,9 @@ function Filters() {
                         Temperamento:</label>
                     <select value={filter.temperament}
                         onChange={handleFilter}
-                        name="temperament" 
-                        >
-                        <option value="">Seleccionar Temperamento</option>
+                        name="temperament"
+                    >
+                        <option value="">Seleccionar </option>
                         {(temperaments.map((tip) => {
                             return <option
                                 key={tip.id}
@@ -102,16 +128,16 @@ function Filters() {
 
                     <label>
                         Origen:
-                        <select value={filter.origin}
-                            onChange={handleFilter}
-                            name="origin">
-                            <option value="">Seleccionar Origen</option>
-                            <option value="api" >API</option>
-                            <option value="bd">Base de Datos</option>
-                        </select>
                     </label>
-                    <button type="button" onClick={action}>filtrar</button>
-                    <button type="submit" onClick={cerrar}>x</button>
+                    <select value={filter.origin}
+                        onChange={handleFilter}
+                        name="origin">
+                        <option value="">Seleccionar</option>
+                        <option value="api" >Existentes</option>
+                        <option value="bd">Creados</option>
+                    </select>
+                    <button className={styles.boton} type="button" onClick={actionFilter}>filtrar</button>
+                    <button className={styles.cerrar} type="submit" onClick={cerrar}>cerrar</button>
 
                 </div>
             )}
@@ -120,27 +146,44 @@ function Filters() {
                 <div>
                     <label>
                         Ordenar:
-                        <select value={order.tipo}
-                            onChange={handleOrder}
-                            name="tipo">
-                            <option value="">Seleccionar </option>
-                            <option value="nombre">Nombre</option>
-                            <option value="peso">Peso</option>
-                        </select>
                     </label>
+                    <select value={order.tipo}
+                        onChange={handleOrder}
+                        name="tipo">
+                        <option value="">Seleccionar </option>
+                        <option value="nombre">Nombre</option>
+                        <option value="peso">Peso</option>
+                    </select>
                     <label>
-                        <select value={order.asc_desc}
-                            onChange={handleOrder}
-                            name="asc_desc">
-                            <option value="">Seleccionar </option>
-                            <option value="asc">Ascendente</option>
-                            <option value="desc">Descendente</option>
-                        </select>
                     </label>
-                    <button type="button" onClick={action}>ordenar</button>
-                    <button type="submit" onClick={cerrar}>x</button>
+                    <select value={order.asc_desc}
+                        onChange={handleOrder}
+                        name="asc_desc">
+                        <option value="">Seleccionar </option>
+                        <option value="asc">Ascendente</option>
+                        <option value="desc">Descendente</option>
+                    </select>
+                    <button className={styles.boton} type="button" onClick={actionOrder}>ordenar</button>
+                    <button className={styles.cerrar} type="submit" onClick={cerrar}>cerrar</button>
 
                 </div>
+            )}
+
+            {showAlert && (
+                <>
+                    <div className={styles.modal}>
+                        <div className={styles.alert}>
+                            <div>
+                                <span className={styles.span}>⚠️ </span>
+                                <span>Hay un Error</span>
+                            </div>
+                            <div className={styles.div2}>
+                                <button className={styles.cerrar2} onClick={cerrarAlert}>close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </>
             )}
         </>
     );

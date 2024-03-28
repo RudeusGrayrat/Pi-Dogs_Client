@@ -10,6 +10,7 @@ const Form = () => {
     const temperaments = useSelector((state) => state.temperaments)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     useEffect(() => {
         dispatch(fetchTemperaments())
     }, [])
@@ -37,10 +38,20 @@ const Form = () => {
 
     const handleTemperament = (e) => {
         const { value } = e.target;
-        setUseData((data) => ({
-            ...data,
-            temperament: [...data.temperament, value],
-        }));
+        const selected = userData.temperament.includes(value)
+        if (selected) {
+            setUseData((data) => ({
+                ...data,
+                temperament: [...data.temperament.filter((option) => option !== value)],
+            }));
+            
+        }else{
+
+            setUseData((data) => ({
+                ...data,
+                temperament: [...data.temperament, value],
+            }));
+        }
     };
 
     const handleBlur = (e) => {
@@ -81,18 +92,18 @@ const Form = () => {
 
     let deshabilitar = arrayofValidation.length > 0 ? true : false
 
-
     return (
         <div className={styles.todo}>
-            <h2>FORM PAGE</h2>
+            <h1 className={styles.h1}>Formulario</h1>
             <form>
                 <div className={styles.form}>
                     <label >Nombre:</label>
                     <input
+                        className={styles.input}
                         type='text'
                         id='name'
                         name='name'
-                        placeholder='nombre'
+                        placeholder='Ej: dobergirl'
                         value={userData.name}
                         onChange={handleChange}
                         onBlur={handleBlur} />
@@ -102,12 +113,13 @@ const Form = () => {
                         <p>{errors.name}</p>
                     ) : null}</div>
                 <div className={styles.form}>
-                    <label >Imagen:</label>
+                    <label >Imagen (URL):</label>
                     <input
+                        className={styles.input}
                         type='text'
                         id='imagen'
                         name='imagen'
-                        placeholder='http://imagen.png'
+                        placeholder='Ej: https://www.imagen/dog.png'
                         value={userData.imagen}
                         onChange={handleChange}
                         onBlur={handleBlur} />
@@ -116,11 +128,13 @@ const Form = () => {
                     <p>{errors.imagen}</p>
                 ) : null}</div>
                 <div className={styles.form}>
-                    <label >Altura:</label>
-                    <input type='text'
+                    <label >Altura (metros):</label>
+                    <input
+                        className={styles.input}
+                        type='text'
                         id='height'
                         name='height'
-                        placeholder='ejemplo: 1 - 2'
+                        placeholder='Ej: 1 - 2'
                         value={userData.height}
                         onChange={handleChange}
                         onBlur={handleBlur} />
@@ -130,12 +144,13 @@ const Form = () => {
                         <p>{errors.height}</p>
                     ) : null}</div>
                 <div className={styles.form}>
-                    <label >Peso:</label>
+                    <label >Peso (Kg):</label>
                     <input
+                        className={styles.input}
                         type='text'
                         id='weight'
                         name='weight'
-                        placeholder='ejemplo: 50 - 70'
+                        placeholder='Ej: 50 - 70'
                         value={userData.weight}
                         onChange={handleChange}
                         onBlur={handleBlur} />
@@ -146,10 +161,12 @@ const Form = () => {
                     ) : null}</div>
                 <div className={styles.form}>
                     <label >Años De Vida:</label>
-                    <input type='text'
+                    <input
+                        className={styles.input}
+                        type='text'
                         id='life_span'
                         name='life_span'
-                        placeholder='ejemplo: 4 - 8 years'
+                        placeholder='Ej: 4 - 8'
                         value={userData.life_span}
                         onChange={handleChange}
                         onBlur={handleBlur} />
@@ -158,16 +175,15 @@ const Form = () => {
                     {errors.life_span ? (
                         <p>{errors.life_span}</p>
                     ) : null}</div>
-                <div>
-                    <label >Temperamento:</label>
+                <div className={styles.form}>
+                    <label >Temperamento(s):</label>
                     <select
-                        className={styles.custome}
+                        className={styles.input}
                         multiple={true}
                         id="temperament"
                         name="temperament"
-                        value={userData.temperament}
-                        onChange={handleTemperament}  >
-                        <option value="">Seleccionar Temperamento</option>
+                        value={userData.temperament }
+                        onChange={handleTemperament}>
                         {(temperaments.map((tip) => {
                             return <option
                                 key={tip.id}
@@ -177,7 +193,11 @@ const Form = () => {
                         }))}
                     </select>
                 </div>
-                <button type="submit" onClick={click} disabled={deshabilitar}>Crear Dog</button>
+                <button
+                    type="submit"
+                    onClick={click}
+                    disabled={deshabilitar}
+                    className={styles.button}>Crear Nueva Raza</button>
 
             </form>
         </div >

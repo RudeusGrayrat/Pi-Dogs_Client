@@ -3,13 +3,14 @@ import {
   GET_DETAIL_DOG,
   SEARCH_DOG,
   FILTER,
+  ORDER,
   CLEAN_DOG,
   CHANGE_PAGE,
   INI,
   SLICE_CHANGE,
   GET_ALL_TEMPERAMENTS,
   SIGUIENTE,
-  ATRAS
+  ATRAS,
 }
   from "./actions";
 
@@ -17,6 +18,7 @@ const initialState = {
   allDogs: [],
   dogName: [],
   filter: [],
+  order:[],
   dogDetails: {},
   temperaments: [],
   paginaActual: 1,
@@ -50,7 +52,12 @@ const rootReducer = (state = initialState, action) => {
         filter: action.payload,
         errors: {},
       };
-
+    case ORDER:
+      return {
+        ...state,
+        filter: action.payload,
+        errors: {},
+      };
     case CLEAN_DOG:
       return {
         ...state,
@@ -91,7 +98,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         atras: action.payload
       }
-    
+
     default:
       return state;
   }

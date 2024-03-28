@@ -4,12 +4,13 @@ export const GET_ALL_TEMPERAMENTS = 'GET_ALL_TEMPERAMENTS';
 export const GET_DETAIL_DOG = 'GET_DETAIL_DOG'
 export const SEARCH_DOG = 'SEARCH_DOG'
 export const FILTER = 'FILTER'
+export const ORDER = 'ORDER'
 export const CLEAN_DOG = 'CLEAN_DOG'
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const INI = 'INI';
 export const SLICE_CHANGE = 'SLICE_CHANGE';
 export const SIGUIENTE = 'SIGUIENTE';
-export const ATRAS ='ATRAS';
+export const ATRAS = 'ATRAS';
 
 export const fetchDogs = () => async (dispatch) => {
   try {
@@ -65,7 +66,7 @@ export const searchDog = (name) => async (dispatch) => {
   }
 };
 
-export const filters = (dogs, temperamento, origin, tipo, ascDesc) => async (dispatch) => {
+export const filters = (dogs, temperamento, origin, setShowAlert) => async (dispatch) => {
   try {
     let temp = null
     let filtered = null
@@ -74,50 +75,64 @@ export const filters = (dogs, temperamento, origin, tipo, ascDesc) => async (dis
         if (origin === "api") {
           temp = dog.temperament
         } else if (origin === "bd") {
-          temp =  dog.temperaments && dog.temperaments?.length > 0 && dog.temperaments[0]?.name// && dog.temperaments.map(name => name.name).join(", ")
+          temp = dog.temperaments && dog.temperaments?.length > 0 && dog.temperaments[0]?.name// && dog.temperaments.map(name => name.name).join(", ")
         } else {
           temp = dog.temperament || (dog.temperaments && dog.temperaments.length > 0 && dog.temperaments[0]?.name);
         }
         return temp && temp.includes(temperamento);
       });
-    } else {
-      if (tipo === "nombre") {
-        filtered = dogs?.slice().sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          if (ascDesc === "asc") {
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-          }
-          if (ascDesc === "desc") {
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
-          }
-          return 0;
-        })
-      }
-      if (tipo === "peso") {
-        filtered = dogs.slice().sort((a, b) => {
-          let weightA = a.weight?.metric || a.weight
-          let weightB = b.weight?.metric || b.weight
-
-          const pesoA = parseFloat(weightA.split(" - ")[0]);
-          const pesoB = parseFloat(weightB.split(" - ")[0]);
-          if (ascDesc === "asc") {
-            return pesoA - pesoB
-          }
-          if (ascDesc === "desc") {
-            return pesoB - pesoA;
-          }
-          return 0;
-
-        });
-      }
+    }if ((!temperamento && !origin) || filtered.length === 0) {
+      setShowAlert(true)
     }
-
-
     dispatch({
       type: FILTER,
+      payload: filtered
+    });
+  } catch (error) {
+    console.error('Error fetching character:', error);
+  }
+};
+
+export const orders = (respuesta, tipo, ascDesc) => async (dispatch) => {
+  try {
+    let filtered = null
+    if (tipo === "nombre") {
+      filtered = respuesta?.slice().sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (ascDesc === "asc") {
+          if (nameA < nameB) return -1;
+          if (nameA > nameB) return 1;
+        }
+        if (ascDesc === "desc") {
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+        }
+        return 0;
+      })
+    }
+    if (tipo === "peso") {
+      filtered = respuesta.slice().sort((a, b) => {
+        let weightA = a.weight?.metric || a.weight
+        let weightB = b.weight?.metric || b.weight
+
+        const pesoA = parseFloat(weightA.split(" - ")[0]);
+        const pesoB = parseFloat(weightB.split(" - ")[0]);
+        if (ascDesc === "asc") {
+          return pesoA - pesoB
+        } else if (ascDesc === "desc") {
+          return pesoB - pesoA;
+        } else {
+          if (weightA < weightB) return -1;
+          if (weightA > weightB) return 1;
+        }
+        return 0;
+      });
+    }
+
+    console.log(filtered);
+    dispatch({
+      type: ORDER,
       payload: filtered
     });
   } catch (error) {

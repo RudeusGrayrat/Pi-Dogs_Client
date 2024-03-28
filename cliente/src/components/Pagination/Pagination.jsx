@@ -43,7 +43,7 @@ function Pagination() {
         }
     }
 
-    if (buscado.length > 8) {
+    if (buscado?.length > 8) {
         return null
     } else {
         return (
@@ -52,7 +52,7 @@ function Pagination() {
                     Atras
                 </button>)}
                 <span className={styles.span}>{paginaActual}</span>
-                {showSiguiente && (<button onClick={siguiente}>
+                {showSiguiente && (<button className={styles.boton} onClick={siguiente}>
                     Siguiente
                 </button>)}
             </div>
