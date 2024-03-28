@@ -6,8 +6,9 @@
     padding: 10px;
     text-align: center;
     display: flex;
+    align-items: center;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     background-color: rgb(239, 206, 175);
   background-blend-mode: overlay;
 }
@@ -19,11 +20,12 @@
 }
 
 .bienvenido {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     color: white;
     font-size: 33px;
-    position: absolute;
-    top: 47%;
-    left: 40%;
+
 }
 
 .pokemons:hover {
@@ -33,6 +35,13 @@
 }
 
 .nc{
+    display: flex;
+    justify-content: center;
     color: black;
-    background-color: rgba(255, 255, 255, 0);
+    color: rgb(100, 92, 74);
+}
+footer{
+    display: flex;
+    justify-content: center;
+    color: rgb(130, 115, 83);
 }
