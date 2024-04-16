@@ -11,6 +11,11 @@ export default function SearchBar(props) {
    const handleChange = (e) => {
       setName([e.target.value])
    }
+   const handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+         handleSearch();
+      }
+   }
    const handleSearch = () => {
       dispatch(searchDog(name))
       setName("")
@@ -24,7 +29,8 @@ export default function SearchBar(props) {
          <input className={styles.buscadorInput}
             type='search' value={name}
             placeholder="Buscar ..."
-            onChange={handleChange} />
+            onChange={handleChange}
+            onKeyDown={handleKeyDown} />
          <button onClick={handleSearch} className={styles.button}>Buscar</button>
       </div>
    );
