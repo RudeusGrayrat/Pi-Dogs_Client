@@ -14,7 +14,7 @@ export const ATRAS = 'ATRAS';
 
 export const fetchDogs = () => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/dogs`);
+    const response = await axios.get(`/dogs`);
     const dogs = response.data;
     dispatch({
       type: GET_ALL_DOGS,
@@ -27,7 +27,7 @@ export const fetchDogs = () => async (dispatch) => {
 
 export const fetchTemperaments = () => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/temperaments`);
+    const response = await axios.get(`/temperaments`);
     const temperaments = response.data;
     dispatch({
       type: GET_ALL_TEMPERAMENTS,
@@ -40,7 +40,7 @@ export const fetchTemperaments = () => async (dispatch) => {
 
 export const fetchCharacter = (id) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/dogs/${id}`);
+    const response = await axios.get(`/dogs/${id}`);
     const character = response.data;
     dispatch({
       type: GET_DETAIL_DOG,
@@ -53,7 +53,7 @@ export const fetchCharacter = (id) => async (dispatch) => {
 
 export const searchDog = (name) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/dogs?name=${name}`);
+    const response = await axios.get(`/dogs?name=${name}`);
     const dog = response.data;
     const respuesta = !name ? null : dog
 

@@ -67,10 +67,9 @@ const Form = () => {
     const arrayofValidation = Object.keys(validationErrors)
 
     const createPokemon = async () => {
-        const url = 'http://localhost:3001/dogs'
 
         if (arrayofValidation.length === 0) {
-            await axios.post(url, userData)
+            await axios.post('/dogs', userData)
             setUseData({
                 name: '',
                 imagen: '',

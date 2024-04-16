@@ -1,5 +1,5 @@
 .landing {
-    background-image: url("https://img.freepik.com/vector-gratis/pata-diseno-logotipo-mascota-vector-negocio-tienda-animales_53876-136741.jpg?w=826&t=st=1708125051~exp=1708125651~hmac=238a3a62ab413f1ffde49913789d762379410e093cadd03a69174d0963bb7348");
+    background-image: url("../../../public/fondo_landing.jpeg");
     min-height: 98vh;
     background-size: cover;
     background-position: center center;
@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: center;
     background-color: rgb(239, 206, 175);
-  background-blend-mode: overlay;
+    background-blend-mode: overlay;
 }
 
 .navlink {
@@ -23,25 +23,43 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    color: white;
-    font-size: 33px;
+    font-size: 43px;
+}
+.dogs{
+    color: #4e4747;
+    background-color: rgba(24, 243, 255, 0.484);
+    border-radius: 10px;
 
 }
-
-.pokemons:hover {
-    color: gold;
-    background-color: rgba(85, 208, 212, 0.484);
+.dogs:hover {
+    color: rgb(222, 207, 121);
+    background-color: rgba(24, 243, 255, 0.484);
     border-radius: 10px;
 }
 
-.nc{
+.nc {
     display: flex;
     justify-content: center;
     color: black;
+    font-size: 43px;
+
     color: rgb(100, 92, 74);
 }
-footer{
+
+footer {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+    font-size: 23px;
     color: rgb(130, 115, 83);
+}
+
+.a {
+    color: rgb(130, 115, 83);
+    text-decoration: none;
+
+}
+.a:hover {
+    color: rgb(57, 48, 28);
+    text-decoration:solid
 }

@@ -7,16 +7,25 @@ function Landing() {
     <div >
       <div className={styles.bienvenido}>
         <NavLink to="/home" className={styles.navlink}>
-          <h1 className={styles.pokemons}>
+          <h1 className={styles.dogs}>
             DOGS
           </h1 >
         </NavLink>
         <p className={styles.nc}>
-          create by @nc
+          create by @Miguelnc
         </p>
 
       </div>
-      <footer>"RudeusGrayrat" en github</footer>
+
+
+      <footer>
+        <a
+          href="https://github.com/RudeusGrayrat"
+          className={styles.a}>
+          "@RudeusGrayrat"
+        </a>
+        en github
+      </footer>
     </div>
   );
 }
