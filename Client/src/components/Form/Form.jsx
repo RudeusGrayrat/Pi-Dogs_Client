@@ -118,7 +118,7 @@ const Form = () => {
                         type='text'
                         id='imagen'
                         name='imagen'
-                        placeholder='Ej: https://www.imagen/dog.png'
+                        placeholder='Ej: https://www.imagen.png'
                         value={userData.imagen}
                         onChange={handleChange}
                         onBlur={handleBlur} />
