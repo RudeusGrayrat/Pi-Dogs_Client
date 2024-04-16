@@ -2,7 +2,7 @@
   text-align: center;
 }
 body{
-  background-image: url("../public/fono_home.png");
+  background-image: url("/fondo_home.png");
   background-repeat:repeat ;
   background-size: 35%;
   background-color: #fff1da;
