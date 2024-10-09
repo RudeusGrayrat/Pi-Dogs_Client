@@ -16,7 +16,7 @@ const Form = () => {
     }, [])
     const [userData, setUseData] = useState({
         name: '',
-        imagen: '',
+        imagen: null,
         height: "",
         weight: "",
         life_span: "",
@@ -44,14 +44,21 @@ const Form = () => {
                 ...data,
                 temperament: [...data.temperament.filter((option) => option !== value)],
             }));
-            
-        }else{
+
+        } else {
 
             setUseData((data) => ({
                 ...data,
                 temperament: [...data.temperament, value],
             }));
         }
+    };
+    const handleimage = (e) => {
+        const file = e.target.files[0];
+        setUseData(prevData => ({
+            ...prevData,
+            imagen: file
+        }));
     };
 
     const handleBlur = (e) => {
@@ -69,10 +76,22 @@ const Form = () => {
     const createPokemon = async () => {
 
         if (arrayofValidation.length === 0) {
-            await axios.post('/dogs', userData)
+            const formData = new FormData();
+            formData.append('imagen', userData.imagen);
+            formData.append('name', userData.name);
+            formData.append('height', userData.height);
+            formData.append('weight', userData.weight);
+            formData.append('life_span', userData.life_span);
+            formData.append('temperament', userData.temperament.join(','))
+
+            await axios.post('/dogs', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             setUseData({
                 name: '',
-                imagen: '',
+                imagen: null,
                 height: "",
                 weight: "",
                 life_span: "",
@@ -91,10 +110,11 @@ const Form = () => {
 
     let deshabilitar = arrayofValidation.length > 0 ? true : false
 
+
     return (
         <div className={styles.todo}>
             <h1 className={styles.h1}>Formulario</h1>
-            <form>
+            <form encType="multipart/form-data" >
                 <div className={styles.form}>
                     <label >Nombre:</label>
                     <input
@@ -112,15 +132,14 @@ const Form = () => {
                         <p>{errors.name}</p>
                     ) : null}</div>
                 <div className={styles.form}>
-                    <label >Imagen (URL):</label>
+                    <label >Imagen :</label>
                     <input
                         className={styles.input}
-                        type='text'
+                        type='file'
                         id='imagen'
                         name='imagen'
-                        placeholder='Ej: https://www.imagen.png'
-                        value={userData.imagen}
-                        onChange={handleChange}
+                        placeholder=''
+                        onChange={handleimage}
                         onBlur={handleBlur} />
                 </div>
                 <div className={styles.par}>{errors.imagen ? (
@@ -181,7 +200,7 @@ const Form = () => {
                         multiple={true}
                         id="temperament"
                         name="temperament"
-                        value={userData.temperament }
+                        value={userData.temperament}
                         onChange={handleTemperament}>
                         {(temperaments.map((tip) => {
                             return <option

@@ -130,7 +130,6 @@ export const orders = (respuesta, tipo, ascDesc) => async (dispatch) => {
       });
     }
 
-    console.log(filtered);
     dispatch({
       type: ORDER,
       payload: filtered
